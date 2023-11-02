@@ -1,0 +1,69 @@
+name: GH action for semantic version tag update by QubeTools
+description: Automated version bump for npm packages, either on push or on schedule.
+runs:
+  using: node16
+  main: dist/index.js
+branding:
+  icon: chevron-up
+  color: blue
+inputs:
+  tag-prefix:
+    description: 'Prefix that is used for the git tag'
+    default: 'v'
+    required: false
+  minor-wording:
+    description: 'Words list that trigger a minor version bump'
+    default: 'feat,minor'
+    required: false
+  major-wording:
+    description: 'Words list that trigger a major version bump'
+    default: 'BREAKING CHANGE,major'
+    required: false
+  patch-wording:
+    description: 'Words list that trigger a patch version bump'
+    required: false
+  rc-wording:
+    description: 'Words list that trigger a rc version bump'
+    default: 'pre-alpha,pre-beta,pre-rc'
+    required: false
+  skip-tag:
+    description: 'Avoid to add a TAG to the version update commit'
+    default: 'false'
+    required: false
+  PACKAGEJSON_DIR:
+    description: 'Custom dir to the package'
+    default: ''
+    required: false
+  target-branch:
+    description: 'A separate branch to perform the version bump on'
+    default: ''
+    required: false
+  default:
+    description: 'Set a default version bump to use'
+    default: 'patch'
+    required: false
+  preid:
+    description: 'Set a custom preid for prerelease build'
+    default: 'rc'
+    required: false
+  commit-message:
+    description: 'Set a custom commit message for version bump commit'
+    default: ''
+    required: false
+  bump-policy:
+    description: 'Set version bump ignore policy'
+    default: 'all'
+    required: false
+  hours-to-go-back:
+    description: 'If this option is set, the action can run on schedule. It then gets the commits from the last n hours and analyzes those commit messages.'
+    default: ''
+    required: false
+  skip-if-no-commits:
+    description: 'If this option is set, the action does not bump if no commit happened; else release a patch.'
+    default: 'false'
+    required: false
+outputs:
+  newVersion:
+    description: 'New version number'
+  bumped:
+    description: 'Whether a version bump was performed (boolean)'
